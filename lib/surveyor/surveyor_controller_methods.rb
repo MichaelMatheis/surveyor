@@ -249,7 +249,7 @@ module Surveyor
           redirect_to path
         end
         format.js do
-          render :text => message, :status => 403
+          render plain: message, status: 403
         end
       end
     end
