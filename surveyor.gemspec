@@ -24,7 +24,7 @@ Gem::Specification.new do |s|
   end
 
   if s.respond_to? :add_runtime_dependency then
-    s.add_runtime_dependency(%q<rails>.freeze, [">= 6.0", "< 6.2"])
+    s.add_runtime_dependency(%q<rails>.freeze, [">= 6.0", "< 7.3"])
     s.add_runtime_dependency(%q<haml>.freeze, [">= 0"])
     s.add_runtime_dependency(%q<sass>.freeze, [">= 0"])
     s.add_runtime_dependency(%q<formtastic>.freeze, [">= 0"])
@@ -45,7 +45,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency(%q<factory_bot_rails>.freeze, [">= 0"])
     s.add_development_dependency(%q<database_cleaner>.freeze, [">= 0"])
   else
-    s.add_dependency(%q<rails>.freeze, [">= 6.0", "< 6.2"])
+    s.add_dependency(%q<rails>.freeze, [">= 6.0", "< 7.3"])
     s.add_dependency(%q<haml>.freeze, [">= 0"])
     s.add_dependency(%q<sass>.freeze, [">= 0"])
     s.add_dependency(%q<formtastic>.freeze, [">= 0"])
