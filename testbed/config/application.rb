@@ -8,12 +8,13 @@ Bundler.require(*Rails.groups)
 
 module Testbed
   class Application < Rails::Application
+    config.load_defaults 6.1
     config.time_zone='Rome'
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
     #
-    config.assets.paths << Rails.root.join("app", "assets", "fonts")
+    config.assets.paths << Rails.root.join("app", "assets", "fonts") if config.respond_to?(:assets)
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
@@ -28,6 +29,9 @@ module Testbed
 
     config.i18n.fallbacks = [I18n.default_locale]
 
-    Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
+    if Rails.application.config.active_record.respond_to?(:sqlite3) &&
+       Rails.application.config.active_record.sqlite3.respond_to?(:represent_boolean_as_integer=)
+      Rails.application.config.active_record.sqlite3.represent_boolean_as_integer = true
+    end
   end
 end

@@ -33,8 +33,8 @@ module Surveyor
       end
 
       # Instance methods
-      def initialize(*args)
-        super(*args)
+      def initialize(*args, **kwargs)
+        super(*args, **kwargs)
         default_args
       end
 

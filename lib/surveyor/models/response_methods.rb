@@ -8,9 +8,9 @@ module Surveyor
 
       included do
         # Associations
-        belongs_to :response_set
-        belongs_to :question
-        belongs_to :answer
+        belongs_to :response_set, optional: true
+        belongs_to :question, optional: true
+        belongs_to :answer, optional: true
         attr_accessible *PermittedParams.new.response_attributes if defined? ActiveModel::MassAssignmentSecurity
 
         # Validations
@@ -30,8 +30,8 @@ module Surveyor
       end
 
       # Instance Methods
-      def initialize(*args)
-        super(*args)
+      def initialize(*args, **kwargs)
+        super(*args, **kwargs)
         default_args
       end
 

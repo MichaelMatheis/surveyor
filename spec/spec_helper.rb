@@ -10,7 +10,12 @@ require 'rspec/rails'
 
 require 'capybara/rails'
 require 'capybara/rspec'
-require 'capybara/poltergeist'
+begin
+  require 'capybara/poltergeist'
+rescue LoadError
+  # Newer Rails/Ruby stacks often omit Poltergeist/PhantomJS.
+  # Keep non-JS specs runnable without this optional driver.
+end
 require 'factories'
 require 'json_spec'
 require 'database_cleaner'
@@ -34,7 +39,18 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
-Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver =
+  if defined?(Capybara::Poltergeist)
+    begin
+      require 'cliver'
+      Cliver.detect!('phantomjs')
+      :poltergeist
+    rescue StandardError
+      :rack_test
+    end
+  else
+    :rack_test
+  end
 
 
 RSpec.configure do |config|
@@ -57,7 +73,7 @@ RSpec.configure do |config|
   # end
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/spec/fixtures"
+  config.fixture_paths = ["#{::Rails.root}/spec/fixtures"]
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

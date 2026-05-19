@@ -44,7 +44,7 @@ module Surveyor
 
       return unless source_code = source_code[start_on_line..end_on_line]
       line_counter = start_on_line
-      source_code.sum do |line|
+      source_code.sum("") do |line|
         line_counter += 1
         "#{line_counter}: #{line}\n"
       end
@@ -202,7 +202,7 @@ module SurveyorParserSurveyTranslationMethods
       when :default
         trans = YAML::dump({})
       end
-      context[:survey].translations << self.class.new(PermittedParams.new(:locale => k.to_s, :translation => trans).survey_translation)
+      context[:survey].translations << self.class.new(PermittedParams.new({ :locale => k.to_s, :translation => trans }).survey_translation)
     end
   end
 end

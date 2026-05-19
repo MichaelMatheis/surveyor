@@ -11,7 +11,7 @@ describe SurveyorHelper do
       expect(helper.q_text(q1)).to eq("<span class='qnum'>1) </span>#{q1.text}")
       expect(helper.q_text(q2)).to eq(q2.text)
       expect(helper.q_text(q3)).to eq(q3.text)
-      expect(helper.q_text(q4)).to match(/<img .*src="\/(images|assets)\/rails-.*\.png".*\/>/)
+      expect(helper.q_text(q4)).to match(%r{<img .*src="/(images|assets)/rails(?:-[^"]+)?\.png".*/>})
       expect(helper.q_text(q5)).to eq(q5.text)
     end
   end

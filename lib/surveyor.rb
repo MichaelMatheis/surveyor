@@ -3,10 +3,14 @@ module Surveyor
   autoload :VERSION, 'surveyor/version'
   autoload :ParserError, 'surveyor/parser'
 end
+require 'active_support'
+require 'active_support/concern'
+require 'surveyor/compat/forbidden_attributes_protection'
 require 'surveyor/common'
 require 'surveyor/acts_as_response'
 # require 'surveyor/surveyor_controller_methods'
 # require 'surveyor/models/survey_methods'
+require 'action_view'
 require 'formtastic'
 Formtastic::FormBuilder.default_text_area_height = 5
 Formtastic::FormBuilder.default_text_area_width = 50

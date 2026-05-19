@@ -71,7 +71,8 @@ module Surveyor
     end
 
     def update
-      question_ids_for_dependencies = (params[:r].try(:values) || []).map{|v| v["question_id"] }.compact.uniq
+      response_hash = response_ui_hash
+      question_ids_for_dependencies = (response_hash.try(:values) || []).map { |v| v["question_id"] }.compact.uniq
       saved = load_and_update_response_set_with_retries
 
       if saved && params[:finish] && !@response_set.mandatory_questions_complete?
@@ -157,11 +158,11 @@ module Surveyor
 
     def load_and_update_response_set
       ResponseSet.transaction do
-        @response_set = ResponseSet.includes({:responses => :answer}).where(:access_code => params[:response_set_code]).first
+        @response_set = ResponseSet.includes(:responses => :answer).where(:access_code => params[:response_set_code]).first
         if @response_set
           saved = true
-          if params[:r]
-            @response_set.update_from_ui_hash(params[:r])
+          if response_ui_hash
+            @response_set.update_from_ui_hash(response_ui_hash)
           end
           if params[:finish] && @response_set.mandatory_questions_complete?
             @response_set.complete!
@@ -204,7 +205,7 @@ module Surveyor
     end
 
     def set_response_set_and_render_context
-      @response_set = ResponseSet.includes({:responses => [:question, :answer]}).where(:access_code => params[:response_set_code]).first
+      @response_set = ResponseSet.includes(:responses => [:question, :answer]).where(:access_code => params[:response_set_code]).first
       @render_context = render_context
     end
 
@@ -279,6 +280,11 @@ module Surveyor
       else
         session[:surveyor_javascript] = "not_enabled"
       end
+    end
+
+    def response_ui_hash
+      return nil unless params[:r]
+      params[:r].respond_to?(:to_unsafe_h) ? params[:r].to_unsafe_h : params[:r]
     end
   end
 end
