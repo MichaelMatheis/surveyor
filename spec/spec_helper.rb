@@ -12,6 +12,11 @@ require 'capybara/rails'
 require 'capybara/rspec'
 begin
   require 'capybara/poltergeist'
+  begin
+    require 'phantomjs'
+  rescue LoadError
+    # Optional dependency; fall back to PATH lookup if not available.
+  end
 rescue LoadError
   # Newer Rails/Ruby stacks often omit Poltergeist/PhantomJS.
   # Keep non-JS specs runnable without this optional driver.
@@ -42,8 +47,11 @@ end
 Capybara.javascript_driver =
   if defined?(Capybara::Poltergeist)
     begin
-      require 'cliver'
-      Cliver.detect!('phantomjs')
+      phantomjs_path = (defined?(Phantomjs) ? Phantomjs.path : nil)
+      Capybara.register_driver :poltergeist do |app|
+        options = phantomjs_path ? { phantomjs: phantomjs_path } : {}
+        Capybara::Poltergeist::Driver.new(app, options)
+      end
       :poltergeist
     rescue StandardError
       :rack_test

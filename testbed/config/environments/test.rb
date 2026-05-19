@@ -37,6 +37,11 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  if config.respond_to?(:assets)
+    config.assets.css_compressor = nil
+    config.assets.js_compressor = nil
+  end
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 end

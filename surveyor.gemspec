@@ -45,6 +45,7 @@ Gem::Specification.new do |s|
     s.add_development_dependency(%q<json_spec>.freeze, ["~> 1.1.1"])
     s.add_development_dependency(%q<factory_bot_rails>.freeze, [">= 0"])
     s.add_development_dependency(%q<database_cleaner>.freeze, [">= 0"])
+    s.add_development_dependency(%q<sassc>.freeze, [">= 2.4", "< 3.0"])
   else
     s.add_dependency(%q<rails>.freeze, [">= 6.0", "< 7.3"])
     s.add_dependency(%q<haml>.freeze, [">= 0"])
@@ -67,5 +68,6 @@ Gem::Specification.new do |s|
     s.add_dependency(%q<json_spec>.freeze, ["~> 1.1.1"])
     s.add_dependency(%q<factory_bot_rails>.freeze, [">= 0"])
     s.add_dependency(%q<database_cleaner>.freeze, [">= 0"])
+    s.add_dependency(%q<sassc>.freeze, [">= 2.4", "< 3.0"])
   end
 end

@@ -13,6 +13,6 @@ Rails.application.config.assets.version = '1.0' if Rails.application.config.resp
 if Rails.application.config.respond_to?(:assets)
   Rails.application.config.assets.paths << Rails.root.join('vendor', 'assets', 'fonts')
 
-  Rails.application.config.assets.precompile += %w( surveyor_all.css )
+  Rails.application.config.assets.precompile += %w( surveyor_all.css ) unless Rails.env.test?
   Rails.application.config.assets.precompile += %w( surveyor_all.js )
 end

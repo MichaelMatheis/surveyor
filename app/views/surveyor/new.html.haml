@@ -19,6 +19,7 @@
             = submit_tag( t('surveyor.take_it'), :default => "Take it" )
 
 :javascript
-  $(document).ready(function() {
-    $("input#surveyor_javascript_enabled").val(true);
+  document.addEventListener("DOMContentLoaded", function () {
+    var input = document.getElementById("surveyor_javascript_enabled");
+    if (input) input.value = true;
   });

@@ -4,7 +4,11 @@ module Surveyor
 
       # Layout: stylsheets and javascripts
       def surveyor_includes
-        stylesheet_link_tag('surveyor_all') + javascript_include_tag('surveyor_all')
+        if Rails.env.test?
+          javascript_include_tag('surveyor_all.js')
+        else
+          stylesheet_link_tag('surveyor_all.css') + javascript_include_tag('surveyor_all.js')
+        end
       end
       # Helper for displaying warning/notice/error flash messages
       def flash_messages(types)
